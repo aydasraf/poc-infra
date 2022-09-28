@@ -18,7 +18,3 @@ output "database_subnets_ids" {
   value = module.vpc.database_subnets
 }
 
-output "database_subnetgroup_name" {
-  value = module.vpc.database_subnet_group_name
-}
-

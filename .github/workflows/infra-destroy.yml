@@ -1,24 +1,18 @@
 # Workflow to deploy VPC to AWS Accounts.
 
-name: Deploy AWS Infrastructure
+name: Destroy AWS Infrastructure
 
 # Controls when the workflow will run
 on:
   # Manual Triggers the workflow upon need.
   workflow_dispatch:
 
-  # Triggers the workflow on push event but only for the "master" branch and when the files inside tf-backend changes
-  push:
-    branches: [ "master" ]
-    paths:
-      - terraform/**
-
 
 jobs:
-  DeployToDev:
+  DestroyDev:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    name: Deploy To Development
+    name: Destroy Development
     environment:
         name: dev
 
@@ -55,15 +49,14 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select dev || terraform workspace new dev
-            terraform plan -input=false
-            terraform apply -auto-approve -input=false
+            terraform destroy -auto-approve -input=false
           done
         working-directory: terraform/
 
-  DeployToStaging:
+  DestroyStaging:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    name: Deploy To Staging
+    name: Destroy Staging
     environment:
       name: qa
 
@@ -100,15 +93,14 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select qa || terraform workspace new qa
-            terraform plan -input=false
-            terraform apply -auto-approve -input=false
+            terraform destroy -auto-approve -input=false
           done
         working-directory: terraform/
 
-  DeployToProd:
+  DestroyProd:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    name: Deploy To Prod
+    name: Destroy Prod
     environment:
       name: prod
 
@@ -145,7 +137,6 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select prod || terraform workspace new prod
-            terraform plan -input=false
-            terraform apply -auto-approve -input=false
+            terraform destroy -auto-approve -input=false
           done
         working-directory: terraform/
