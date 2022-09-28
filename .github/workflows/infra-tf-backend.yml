@@ -1,0 +1,40 @@
+# Workflow to deploy TF backend to Prod Account.
+
+name: Deploy TF Backend Infrastructure
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push event but only for the "master" branch and when the files inside tf-backend changes
+  push:
+    branches: [ "master" ]
+    paths:
+      - cloudformation/tf-backend/**
+
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE, so the job can access it
+      - name: Checkout
+      - uses: actions/checkout@v3
+
+      # Configure the AWS Enviromnet Variables insdie the Runner
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      # Deploy the terrafrom backend Cloudformation Stack
+      - name: Deploy Cloudfromation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: Terrafrom-Backend
+          template: cloudformation/tf-backend/tf-backend.yaml
+          parameter-overrides: "StateBucketName=ayd-poc-tf-state,LockTableName=ayd-poc-tf-lock-table"
