@@ -8,7 +8,7 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - terraform/vpc/**
+      - terraform/**
 
 
 jobs:
@@ -44,31 +44,18 @@ jobs:
         with:
           terraform_version: 1.3.1
 
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        run: terraform init
-        working-directory: terraform/vpc/
-
-      # Checks that all Terraform configuration files adhere to a canonical format
-      - name: Terraform Format
-        run: terraform fmt -check
-        working-directory: terraform/vpc/
-
-      # Switch the proper workspace that relates to the target environment
-      - name: Terraform Workspace
-        run: terraform workspace select dev || terraform workspace new dev
-        working-directory: terraform/vpc/
-
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: terraform plan -input=false
-        working-directory: terraform/vpc/
-
-        # Apply the Terraform Code
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: terraform/vpc/
-
+      # Loop through TF files, Initialize, Plan and deploy changes.
+      - name: Terraform Deploy
+        run: |
+          for d in */ ; do
+            cd "$d"
+            terraform init
+            terraform fmt -check
+            terraform workspace select dev || terraform workspace new dev
+            terraform plan -input=false
+            terraform apply -auto-approve -input=false
+          done
+        working-directory: terraform/
 
   DeployToStaging:
     # The type of runner that the job will run on
@@ -102,31 +89,18 @@ jobs:
         with:
           terraform_version: 1.3.1
 
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        run: terraform init
-        working-directory: terraform/vpc/
-
-      # Checks that all Terraform configuration files adhere to a canonical format
-      - name: Terraform Format
-        run: terraform fmt -check
-        working-directory: terraform/vpc/
-
-      # Switch the proper workspace that relates to the target environment
-      - name: Terraform Workspace
-        run: terraform workspace select qa || terraform workspace new qa
-        working-directory: terraform/vpc/
-
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: terraform plan -input=false
-        working-directory: terraform/vpc/
-
-        # Apply the Terraform Code
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: terraform/vpc/
-
+      # Loop through TF files, Initialize, Plan and deploy changes.
+      - name: Terraform Deploy
+        run: |
+          for d in */ ; do
+            cd "$d"
+            terraform init
+            terraform fmt -check
+            terraform workspace select dev || terraform workspace new dev
+            terraform plan -input=false
+            terraform apply -auto-approve -input=false
+          done
+        working-directory: terraform/
 
   DeployToProd:
     # The type of runner that the job will run on
@@ -160,29 +134,15 @@ jobs:
         with:
           terraform_version: 1.3.1
 
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        run: terraform init
-        working-directory: terraform/vpc/
-
-      # Checks that all Terraform configuration files adhere to a canonical format
-      - name: Terraform Format
-        run: terraform fmt -check
-        working-directory: terraform/vpc/
-
-      # Switch the proper workspace that relates to the target environment
-      - name: Terraform Workspace
-        run: terraform workspace select prod || terraform workspace new prod
-        working-directory: terraform/vpc/
-
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: terraform plan -input=false
-        working-directory: terraform/vpc/
-
-        # Apply the Terraform Code
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: terraform/vpc/
-
-
+      # Loop through TF files, Initialize, Plan and deploy changes.
+      - name: Terraform Deploy
+        run: |
+          for d in */ ; do
+            cd "$d"
+            terraform init
+            terraform fmt -check
+            terraform workspace select dev || terraform workspace new dev
+            terraform plan -input=false
+            terraform apply -auto-approve -input=false
+          done
+        working-directory: terraform/
