@@ -61,6 +61,7 @@ jobs:
             terraform plan -input=false
             terraform apply -auto-approve -input=false
           done
+        working-directory: terraform/
 
   DeployToStaging:
     # The type of runner that the job will run on
