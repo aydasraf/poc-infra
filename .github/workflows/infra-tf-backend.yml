@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out repository under $GITHUB_WORKSPACE, so the job can access it
       - name: Checkout
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       # Configure the AWS Enviromnet Variables insdie the Runner
       - name: Configure AWS credentials
