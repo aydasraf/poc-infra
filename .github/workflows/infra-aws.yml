@@ -54,7 +54,7 @@ jobs:
           TF_VAR_DATABASE_PASSWORD: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
         run: |
           for d in */ ; do
-            cd "$GITHUB_WORKSPACE/terraform/$d"
+            cd "${{ runner.workspace }}/terraform/$d"
             terraform init
             terraform fmt -check
             terraform workspace select dev || terraform workspace new dev
