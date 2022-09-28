@@ -4,9 +4,8 @@ name: Deploy AWS Infrastructure
 
 # Controls when the workflow will run
 on:
-  on:
-    # Manual Triggers the workflow upon need.
-    workflow_dispatch:
+  # Manual Triggers the workflow upon need.
+  workflow_dispatch:
 
   # Triggers the workflow on push event but only for the "master" branch and when the files inside tf-backend changes
   push:
