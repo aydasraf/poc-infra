@@ -20,6 +20,15 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+      Tags:
+        - Key: "Name"
+          Value: !Ref StateBucketName
+        - Key: "Team"
+          Value: "DevOps"
+        - Key: "ManagedBy"
+          Value: "Cloudformation"
+        - Key: "Stack_Name"
+          Value: !Ref AWS::StackName
 
   TerraformLockTable:
     Type: 'AWS::DynamoDB::Table'
@@ -34,6 +43,15 @@ Resources:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
       TableName: !Ref LockTableName
+      Tags:
+        - Key: "Name"
+          Value: !Ref LockTableName
+        - Key: "Team"
+          Value: "DevOps"
+        - Key: "ManagedBy"
+          Value: "Cloudformation"
+        - Key: "Stack_Name"
+          Value: !Ref AWS::StackName
 
 Outputs:
   StackName:

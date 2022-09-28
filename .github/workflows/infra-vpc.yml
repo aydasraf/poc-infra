@@ -1,0 +1,188 @@
+# Workflow to deploy VPC to AWS Accounts.
+
+name: Deploy VPC
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push event but only for the "master" branch and when the files inside tf-backend changes
+  push:
+    branches: [ "master" ]
+    paths:
+      - terraform/vpc/**
+
+
+jobs:
+  DeployToDev:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Deploy To Development
+    environment:
+        name: dev
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE, so the job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Configure the AWS Enviromnet Variables insdie the Runner
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      # Deploy the terrafrom backend Cloudformation Stack
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.1
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform/vpc/
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: terraform/vpc/
+
+      # Switch the proper workspace that relates to the target environment
+      - name: Terraform Workspace
+        run: terraform workspace select dev || terraform workspace new dev
+        working-directory: terraform/vpc/
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        working-directory: terraform/vpc/
+
+        # Apply the Terraform Code
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+        working-directory: terraform/vpc/
+
+
+  DeployToStaging:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Deploy To Staging
+    environment:
+      name: qa
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE, so the job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Configure the AWS Enviromnet Variables insdie the Runner
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      # Deploy the terrafrom backend Cloudformation Stack
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.1
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform/vpc/
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: terraform/vpc/
+
+      # Switch the proper workspace that relates to the target environment
+      - name: Terraform Workspace
+        run: terraform workspace select qa || terraform workspace new qa
+        working-directory: terraform/vpc/
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        working-directory: terraform/vpc/
+
+        # Apply the Terraform Code
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+        working-directory: terraform/vpc/
+
+
+  DeployToProd:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Deploy To Prod
+    environment:
+      name: prod
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE, so the job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Configure the AWS Enviromnet Variables insdie the Runner
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      # Deploy the terrafrom backend Cloudformation Stack
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.1
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform/vpc/
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: terraform/vpc/
+
+      # Switch the proper workspace that relates to the target environment
+      - name: Terraform Workspace
+        run: terraform workspace select prod || terraform workspace new prod
+        working-directory: terraform/vpc/
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        working-directory: terraform/vpc/
+
+        # Apply the Terraform Code
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+        working-directory: terraform/vpc/
+
+
