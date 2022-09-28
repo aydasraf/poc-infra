@@ -3,7 +3,7 @@ module "vpc" {
   version = "3.16.0"
 
   name = "${local.prefix}-vpc"
-  cidr = local.cidr
+  cidr = local.cidr[terraform.workspace]
 
   azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
   private_subnets  = local.subnets.private
