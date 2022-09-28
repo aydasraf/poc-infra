@@ -4,6 +4,6 @@ data "terraform_remote_state" "vpc" {
   config = {
     region = local.region
     bucket = local.states_bucket
-    key    = "vpc.tfstate"
+    key    = "env://${terraform.workspace}/vpc.tfstate"
   }
 }
