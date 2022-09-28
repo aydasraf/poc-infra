@@ -19,7 +19,7 @@ resource "aws_security_group" "rds" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = join(
+  tags = merge(
     {
       Name = "${local.prefix}-rds-sg"
     },
