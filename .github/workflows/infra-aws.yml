@@ -49,6 +49,9 @@ jobs:
 
       # Loop through TF files, Initialize, Plan and deploy changes.
       - name: Terraform Deploy
+        env:
+          TF_VAR_DATABASE_USER: ${{ secrets.TF_VAR_DATABASE_USER }}
+          TF_VAR_DATABASE_PASSWORD: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
         run: |
           for d in */ ; do
             cd "$d"
@@ -94,6 +97,9 @@ jobs:
 
       # Loop through TF files, Initialize, Plan and deploy changes.
       - name: Terraform Deploy
+        env:
+          TF_VAR_DATABASE_USER: ${{ secrets.TF_VAR_DATABASE_USER }}
+          TF_VAR_DATABASE_PASSWORD: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
         run: |
           for d in */ ; do
             cd "$d"
@@ -139,6 +145,9 @@ jobs:
 
       # Loop through TF files, Initialize, Plan and deploy changes.
       - name: Terraform Deploy
+        env:
+          TF_VAR_DATABASE_USER: ${{ secrets.TF_VAR_DATABASE_USER }}
+          TF_VAR_DATABASE_PASSWORD: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
         run: |
           for d in */ ; do
             cd "$d"
