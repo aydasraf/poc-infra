@@ -1,9 +1,9 @@
-variable "database_user" {
+variable "DATABASE_USER" {
   type      = string
   sensitive = true
 }
 
-variable "database_password" {
+variable "DATABASE_PASSWORD" {
   type      = string
   sensitive = true
 }
