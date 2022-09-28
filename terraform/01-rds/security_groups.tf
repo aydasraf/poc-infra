@@ -8,7 +8,7 @@ resource "aws_security_group" "rds" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = data.terraform_remote_state.vpc.outputs.private_subnets_ids
+    cidr_blocks = data.terraform_remote_state.vpc.outputs.private_subnets_cidrs
   }
 
   egress {
