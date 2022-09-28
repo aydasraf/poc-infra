@@ -54,14 +54,13 @@ jobs:
           TF_VAR_DATABASE_PASSWORD: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
         run: |
           for d in */ ; do
-            cd "$d"
+            cd "$GITHUB_WORKSPACE/terraform/$d"
             terraform init
             terraform fmt -check
             terraform workspace select dev || terraform workspace new dev
             terraform plan -input=false
             terraform apply -auto-approve -input=false
           done
-        working-directory: terraform/
 
   DeployToStaging:
     # The type of runner that the job will run on
