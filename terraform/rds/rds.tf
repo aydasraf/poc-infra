@@ -1,5 +1,5 @@
 module "db" {
-  source  = "terraform-aws-modules/rds/aws//examples/complete-postgres"
+  source  = "terraform-aws-modules/rds/aws"
   version = "5.1.0"
 
   identifier = "${local.prefix}-rds"
@@ -19,9 +19,9 @@ module "db" {
   # "Error creating DB Instance: InvalidParameterValue: MasterUsername
   # user cannot be used as it is a reserved word used by the engine"
   db_name                = "url_shortener"
-  username               = var.database_user
+  username               = var.DATABASE_USER
   create_random_password = false
-  password               = var.database_password
+  password               = var.DATABASE_PASSWORD
 
   port = 5432
 
