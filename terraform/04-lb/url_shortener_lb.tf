@@ -14,24 +14,6 @@ resource "aws_alb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type = "redirect"
-
-    redirect {
-      port        = 443
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
-resource "aws_alb_listener" "https" {
-  load_balancer_arn = aws_lb.url_shortener.id
-  port              = 443
-  protocol          = "HTTPS"
-
-  ssl_policy = "ELBSecurityPolicy-2016-08"
-
-  default_action {
     type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
