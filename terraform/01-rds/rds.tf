@@ -1,4 +1,4 @@
-module "rds" {
+module "url_shortener" {
   source  = "terraform-aws-modules/rds/aws"
   version = "5.1.0"
 
@@ -9,7 +9,7 @@ module "rds" {
   engine_version       = "14.1"
   family               = "postgres14" # DB parameter group
   major_engine_version = "14"         # DB option group
-  instance_class       = local.instance_class[terraform.workspace]
+  instance_class       = local.url_shortener_instance_class[terraform.workspace]
 
   storage_type          = "gp2"
   allocated_storage     = 5
