@@ -1,5 +1,5 @@
 locals {
-  domain_name = "aydasraf.links"
+  domain_name = "aydasraf.link"
 
   tags = {
     Environment = terraform.workspace

@@ -11,7 +11,7 @@ terraform {
     bucket         = "ayd-poc-tf-state"
     region         = "eu-west-1"
     dynamodb_table = "ayd-poc-tf-lock-table"
-    key            = "ecs.tfstate"
+    key            = "lb.tfstate"
   }
 }
 
