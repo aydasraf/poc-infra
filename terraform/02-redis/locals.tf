@@ -2,12 +2,11 @@ locals {
   prefix        = "poc-${terraform.workspace}"
   region        = "eu-west-1"
   states_bucket = "ayd-poc-tf-state"
-  instance_class = {
-    dev  = "db.t4g.micro"
-    qa   = "db.t4g.micro"
-    prod = "db.t4g.micro"
+  node_type = {
+    dev  = "cache.t3.micro"
+    qa   = "cache.t3.micro"
+    prod = "cache.t3.micro"
   }
-
 
   tags = {
     Environment = terraform.workspace

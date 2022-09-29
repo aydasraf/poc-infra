@@ -9,7 +9,7 @@ module "rds" {
   engine_version       = "14.1"
   family               = "postgres14" # DB parameter group
   major_engine_version = "14"         # DB option group
-  instance_class       = "db.t4g.micro"
+  instance_class       = local.instance_class[terraform.workspace]
 
   storage_type          = "gp2"
   allocated_storage     = 5
@@ -46,5 +46,10 @@ module "rds" {
   monitoring_role_use_name_prefix       = true
   monitoring_role_description           = ""
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "${local.prefix}-rds"
+    },
+    local.tags
+  )
 }
