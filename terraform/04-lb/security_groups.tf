@@ -7,7 +7,7 @@ resource "aws_security_group" "global" {
     description = "Allow HTTP"
     from_port   = 80
     to_port     = 80
-    protocol    = "HTTP"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -15,7 +15,7 @@ resource "aws_security_group" "global" {
     description = "Allow HTTPs"
     from_port   = 443
     to_port     = 443
-    protocol    = "HTTPS"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
