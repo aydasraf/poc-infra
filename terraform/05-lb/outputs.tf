@@ -3,7 +3,7 @@ output "url_shortener_lb_arn" {
 }
 
 output "url_shortener_lb_name" {
-  value = aws_lb.url_shortener.name
+  value = aws_lb.url_shortener.dns_name
 }
 
 output "url_shortener_http_listener_arn" {
