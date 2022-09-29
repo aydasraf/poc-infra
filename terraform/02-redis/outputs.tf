@@ -3,5 +3,8 @@ output "redis_endpoint" {
 }
 
 output "test" {
-  value = aws_elasticache_cluster.redis.cache_nodes
+  value = [ for node in aws_elasticache_cluster.redis.cache_nodes:
+  "${node.address}:${node.port}"
+  ]
+
 }
