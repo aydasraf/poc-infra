@@ -13,3 +13,7 @@ output "url_shortener_http_listener_arn" {
 output "url_shortener_https_listener_arn" {
   value = aws_alb_listener.https.arn
 }
+
+output "url_shortener_lb_zone_id" {
+  value = aws_lb.url_shortener.zone_id
+}
