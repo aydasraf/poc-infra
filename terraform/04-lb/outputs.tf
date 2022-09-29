@@ -1,4 +1,8 @@
-output "ecs_cluster_id" {
-  value = aws_ecs_cluster.ecs.id
+output "url_shortener_lb_arn" {
+  value = aws_lb.url_shortener.arn
+}
+
+output "url_shortener_lb_name" {
+  value = aws_lb.url_shortener.name
 }
 

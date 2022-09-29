@@ -1,5 +1,5 @@
 locals {
-  prefix        = "poc-${terraform.workspace}"
+  prefix = "poc-${terraform.workspace}"
 
   tags = {
     Environment = terraform.workspace
