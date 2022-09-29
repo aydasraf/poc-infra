@@ -58,7 +58,6 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select dev || terraform workspace new dev
-            terraform plan -input=false
             terraform apply -auto-approve -input=false
             cd ..
           done
@@ -107,7 +106,6 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select qa || terraform workspace new qa
-            terraform plan -input=false
             terraform apply -auto-approve -input=false
             cd ..
           done
@@ -156,7 +154,6 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select prod || terraform workspace new prod
-            terraform plan -input=false
             terraform apply -auto-approve -input=false
             cd ..
           done
