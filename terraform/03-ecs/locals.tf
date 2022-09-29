@@ -3,7 +3,7 @@ locals {
   repo_names = [
     {
       name = "url-shortener"
-      team = "Kutt"
+      team = "kutt"
     }
   ]
 

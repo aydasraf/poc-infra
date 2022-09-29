@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "main" {
   count                = length(local.repo_names)
-  name                 = "${local.repo_names[count.index].name}/${local.repo_names[count.index].team}"
+  name                 = "${local.repo_names[count.index].team}/${local.repo_names[count.index].name}"
   image_tag_mutability = "MUTABLE"
 
   tags = merge(
