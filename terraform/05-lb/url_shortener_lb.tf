@@ -40,7 +40,7 @@ resource "aws_alb_listener" "https" {
   certificate_arn = data.terraform_remote_state.acm.outputs.wildcard_certificate_arn
 
   default_action {
-    type = "fixed_response"
+    type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
       status_code  = "404"
