@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "main" {
-  count                = length(local.repo_names)
+  count                = terraform.workspace == "dev" ? length(local.repo_names) : 0
   name                 = "${local.repo_names[count.index].team}/${local.repo_names[count.index].name}"
   image_tag_mutability = "MUTABLE"
 
