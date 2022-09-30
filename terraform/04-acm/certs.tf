@@ -3,7 +3,7 @@ resource "aws_acm_certificate" "wildcard" {
   validation_method = "DNS"
   tags = merge(
     {
-      Name = "${local.domain_name}-wildcard-cert"
+      Name = "${terraform.workspace}.${local.domain_name}-wildcard-cert"
     },
     local.tags
   )
