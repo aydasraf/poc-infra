@@ -9,7 +9,7 @@ resource "aws_elasticache_subnet_group" "redis" {
   )
 }
 
-resource "aws_elasticache_cluster" "redis" {
+resource "aws_elasticache_cluster" "url_shortener" {
   cluster_id           = "${local.prefix}-redis"
   engine               = "redis"
   node_type            = local.node_type[terraform.workspace]
