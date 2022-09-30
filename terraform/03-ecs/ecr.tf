@@ -12,7 +12,7 @@ resource "aws_ecr_repository" "main" {
 }
 
 resource "aws_ecr_lifecycle_policy" "main" {
-  count = length(local.repo_names)
+  count = terraform.workspace == "dev" ? length(local.repo_names) : 0
 
   repository = aws_ecr_repository.main[count.index].name
 
