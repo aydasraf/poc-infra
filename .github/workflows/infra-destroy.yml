@@ -52,7 +52,7 @@ jobs:
             terraform init
             terraform fmt -check
             terraform workspace select dev || terraform workspace new dev
-            terraform destroy -auto-approve -input=false
+            terraform destroy -auto-approve -input=false || true
             cd ..
           done
         working-directory: terraform/
